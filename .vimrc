@@ -79,4 +79,5 @@ syntax on
 " 行をまたいで移動
 set whichwrap=b,s,h,l,<,>,[,],~
 
-
+"警告音をoff
+set visualbell t_vb=
