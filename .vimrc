@@ -43,7 +43,6 @@ let g:indent_guides_guide_size = 1
 "colorscheme options
 colorscheme molokai
 
-set ruler
 
 " 対応する括弧やブレースを表示
 "set showmatch matchtime=1
