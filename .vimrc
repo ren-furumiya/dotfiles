@@ -11,13 +11,14 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'hauleth/blame.vim'
+Plugin 'tomasr/molokai'
 
 
 call vundle#end()
 filetype plugin indent on
 
 set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 
@@ -29,7 +30,6 @@ let g:indent_guides_start_level=2
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors=0
 
-colorscheme default
 
 " 奇数インデントのカラー
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=gray
@@ -41,10 +41,12 @@ let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
 "colorscheme options
-colorscheme blame
+colorscheme molokai
+
+set ruler
 
 " 対応する括弧やブレースを表示
-set showmatch matchtime=1
+"set showmatch matchtime=1
 
 " ステータス行を常に表示
 set laststatus=2
@@ -53,7 +55,7 @@ set laststatus=2
 set listchars=tab:^\ ,trail:~
 
 " コメントの色を水色
-hi Comment ctermfg=3
+"hi Comment ctermfg=3
 
 " インデント幅
 "set shiftwidth=2
@@ -74,10 +76,13 @@ set title
 set number
 
 " シンタックスハイライト
-syntax on
+syntax enable
 
 " 行をまたいで移動
 set whichwrap=b,s,h,l,<,>,[,],~
 
-"警告音をoff
+" 検索語句のハイライト
+set hlsearch
+
+"警告音をoff(windows)
 set visualbell t_vb=
