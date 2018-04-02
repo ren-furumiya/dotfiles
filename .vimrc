@@ -11,7 +11,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'tomasr/molokai'
+Plugin 'altercation/vim-colors-solarized'
 
 
 call vundle#end()
@@ -41,11 +41,12 @@ let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
 "colorscheme options
-colorscheme molokai
-
+syntax enable
+set background=dark
+colorscheme solarized
 
 " 対応する括弧やブレースを表示
-"set showmatch matchtime=1
+set showmatch matchtime=1
 
 " ステータス行を常に表示
 set laststatus=2
@@ -73,9 +74,6 @@ set title
 
 " 行番号の表示
 set number
-
-" シンタックスハイライト
-syntax enable
 
 " 行をまたいで移動
 set whichwrap=b,s,h,l,<,>,[,],~
