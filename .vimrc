@@ -11,8 +11,10 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jacoborus/tender.vim'
+Plugin 'itchyny/lightline.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -24,32 +26,88 @@ set expandtab
 
 " indent guide options
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
-let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_enable_on_vim_startup = 1
 " ガイドをスタートするインデントの量
-let g:indent_guides_start_level=2
+"let g:indent_guides_start_level=2
 " 自動カラーを無効にする
 "let g:indent_guides_auto_colors=0
 
-
-" 奇数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=gray
-" 偶数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgray
-" ハイライト色の変化の幅
-let g:indent_guides_color_change_percent = 30
-" ガイドの幅
-let g:indent_guides_guide_size = 1
-
 "colorscheme options
 syntax enable
-set background=dark
-colorscheme solarized
+colorscheme tender
+"let 
+
+"lightline
+let g:lightline = {
+        \ 'colorscheme': 'tender',
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'LightlineModified',
+        \   'readonly': 'LightlineReadonly',
+        \   'fugitive': 'LightlineFugitive',
+        \   'filename': 'LightlineFilename',
+        \   'fileformat': 'LightlineFileformat',
+        \   'filetype': 'LightlineFiletype',
+        \   'fileencoding': 'LightlineFileencoding',
+        \   'mode': 'LightlineMode'
+        \ }
+        \ }
+
+function! LightlineModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+
+  function! LightlineReadonly()
+      return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+    endfunction
+
+    function! LightlineFilename()
+        return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+                \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+                \  &ft == 'unite' ? unite#get_status_string() :
+                \  &ft == 'vimshell' ? vimshell#get_status_string() :
+                \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+                \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+      endfunction
+
+      function! LightlineFugitive()
+          if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+                return fugitive#head()
+                  else
+                        return ''
+                          endif
+                        endfunction
+
+                        function! LightlineFileformat()
+                            return winwidth(0) > 70 ? &fileformat : ''
+                          endfunction
+
+                          function! LightlineFiletype()
+                              return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+                            endfunction
+
+                            function! LightlineFileencoding()
+                                return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+                              endfunction
+
+                              function! LightlineMode()
+                                  return winwidth(0) > 60 ? lightline#mode() : ''
+                                endfunction
+
+
+" ステータス行を常に表示
+set laststatus=2
+
 
 "NERDTree option
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 
-" 対応する括弧やブレースを表示
+
+"対応する括弧やブレースを表示
 set showmatch matchtime=1
 
 " ステータス行を常に表示
@@ -57,9 +115,6 @@ set laststatus=2
 
 " 行末のスペースを可視化
 set listchars=tab:^\ ,trail:~
-
-" コメントの色を水色
-"hi Comment ctermfg=3
 
 " インデント幅
 "set shiftwidth=2
