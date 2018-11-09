@@ -4,7 +4,7 @@ set nocompatible
 " ファイル形式の検出を無効
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 
 Bundle 'VundleVim/Vundle.vim'
